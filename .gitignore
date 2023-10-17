@@ -1,0 +1,13 @@
+# python
+__pycache__/
+*.pyc
+*.gch
+
+# test/
+**/test/combined.nim
+actual/
+exec.sh
+*.bin
+*.bin.dSYM
+a.out
+.a.out

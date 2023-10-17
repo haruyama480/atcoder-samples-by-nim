@@ -1,0 +1,46 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "nim_learning (run)",
+            "type": "process",
+            "options": {
+                "cwd": "${fileDirname}",
+            },
+            "command": "nim",
+            "args": [
+                "c",
+                "-r",
+                "--hints:off",
+                "--verbosity:0",
+                "--warnings:off",
+                "-d:release", // nimCallDepthLimit などの上限値をあげるために必要
+                "-d:DO_DUMP=true",
+                "-o:test/${fileBasenameNoExtension}.bin",
+                "${fileBasenameNoExtension}.nim",
+            ],
+            "group": "test",
+            "presentation": {
+                "clear": true
+            },
+        },
+        {
+            "label": "atcoder_nim (build & test)",
+            "type": "shell",
+            "command": "bash",
+            "options": {
+                "cwd": "${fileDirname}",
+            },
+            "args": [
+                "test/exec.sh",
+                "${fileBasename}",
+            ],
+            "presentation": {
+                "clear": true
+            },
+            "group": "build",
+        },
+    ]
+}
