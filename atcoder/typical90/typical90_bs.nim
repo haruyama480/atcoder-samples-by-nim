@@ -15,21 +15,23 @@ input:
   (N,M,K): int
   AB[M]: (int1, int1)
 
-# func popIdx(q: var seq[int], idx: int): int=
-#   var buf = makeSeq([0],0)
-#   for _ in 0..<idx:
-#     buf.add q.pop()
-#   result = q.pop() 
-#   for _ in 0..<idx:
-#     q.add buf.pop()
+# キューの後ろからidx番目をpopする
+func popIdx(q: var seq[int], idx: int): int {.inline.} =
+  var buf = makeSeq([0],0)
+  for _ in 0..<idx:
+    buf.add q.pop()
+  result = q.pop() 
+  for _ in 0..<idx:
+    q.add buf.pop()
 
-# func pushIdx(q: var seq[int], idx: int, value: int)=
-#   var buf = makeSeq([0],0)
-#   for _ in 0..<idx:
-#     buf.add q.pop()
-#   q.add(value) 
-#   for _ in 0..<idx:
-#     q.add buf.pop()
+# キューの後ろからidx番目にpushする
+func pushIdx(q: var seq[int], idx: int, value: int) {.inline.} =
+  var buf = makeSeq([0],0)
+  for _ in 0..<idx:
+    buf.add q.pop()
+  q.add(value) 
+  for _ in 0..<idx:
+    q.add buf.pop()
 
 proc solve()=
   var g = initGraph(N)
@@ -60,14 +62,8 @@ proc solve()=
 
     for l in cands.len:
       dmp (trace, target, cands)
-      
-      # let c = cands.popIdx(l) # こう書きたいけど遅い
-      var popped = makeSeq([0],0)
-      for _ in 0..<l:
-        popped.add cands.pop()
-      let c = cands.pop() 
-      for _ in 0..<l:
-        cands.add popped.pop()
+
+      let c = cands.popIdx(l)
 
       var addcnt = 0
       for e in g[c]:
@@ -83,13 +79,8 @@ proc solve()=
         deg[e.dst].inc
       while addcnt > 0:
         addcnt.dec; discard cands.pop
-      
-      # cands.pushIdx(l,c) # こう書きたいけど遅い
-      for _ in 0..<l:
-        popped.add cands.pop()
-      cands.add c
-      for _ in 0..<l:
-        cands.add popped.pop()
+
+      cands.pushIdx(l,c)
 
   discard dfs(N)
 
