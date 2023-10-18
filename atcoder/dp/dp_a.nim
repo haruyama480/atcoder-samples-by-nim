@@ -13,11 +13,8 @@ input:
   h: seq[int]
 
 var dp = makeSeq([N],10i64^10)
-# dp[0] = 0
-for i in 0..<N:
-  if i == 0:
-    dp[0] = 0
-    continue
+dp[0] = 0
+for i in 1..<N:
   dp[i].min= dp[i-1]+abs(h[i]-h[i-1])
   if i > 1:
     dp[i].min= dp[i-2]+abs(h[i]-h[i-2])
