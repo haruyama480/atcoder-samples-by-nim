@@ -12,6 +12,8 @@ from tools.scraper import AtCoderContest, AtCoderScraper, AtCoderTask
 from tools.template import Template, TemplateNim, TemplateRs
 
 USERNAME = getpass.getuser()
+BASEPATH = f'/Users/{USERNAME}/ghq/github.com/haruyama480/atcoder-samples-by-nim/'
+NIMACLPATH = f'/Users/{USERNAME}/ghq/github.com/zer0-star/Nim-ACL'
 
 class AtCoderTool:
     def __init__(self, api, scraper, template_dir: str, game_dir: pathlib.Path):
@@ -153,14 +155,14 @@ class AtCoderTool:
 
             # first expand
             combined_path = self._game_dir.joinpath(self._path_nim_combined)
-            result = subprocess.run(["python3", f"/Users/{USERNAME}/ghq/github.com/haruyama480/atcoder-samples-by-nim/nim/expander.py",
+            result = subprocess.run(["python3", f"{BASEPATH}nim/expander.py",
                                      "-s", target_path, "-c"], capture_output=True)
             assert result.returncode == 0, result
             with open(combined_path, 'w') as f:
                 f.write(result.stdout.decode())
             # second expand
-            result = subprocess.run(["python3", f"/Users/{USERNAME}/ghq/github.com/zer0-star/Nim-ACL/expander.py",
-                                     "--lib", f"/Users/{USERNAME}/ghq/github.com/zer0-star/Nim-ACL",
+            result = subprocess.run(["python3", f"{NIMACLPATH}/expander.py",
+                                     "--lib", NIMACLPATH,
                                      "-s", combined_path, "-c"], capture_output=True)
             assert result.returncode == 0, result
             source_code = result.stdout.decode()
@@ -194,7 +196,6 @@ class AtCoderTool:
                                          source_code=source_code)
         assert int(submission_id)
 
-        # url = 'https://atcoder.jp/contests/%s/submissions/%s' % (sc.contest_id, submission_id)
         url = 'https://atcoder.jp/contests/%s/submissions/me' % sc.contest_id
         chrome_path = 'open -a /Applications/Google\ Chrome.app %s'
         webbrowser.get(chrome_path).open(url)
@@ -215,7 +216,7 @@ class AtCoderTool:
 
 
 def create_act(contest_class, contest_num=None):
-    base = f'/Users/{USERNAME}/ghq/github.com/haruyama480/atcoder-samples-by-nim/'
+    base = BASEPATH
     root_dir = pathlib.Path(f'{base}/atcoder')
     template_dir = f'{base}/atcoder/tools/templates'
 
