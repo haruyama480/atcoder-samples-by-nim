@@ -12,6 +12,8 @@ pip install lxml requests fabric beautifulsoup4 matplotlib cached_property jinja
 ```
 
 ```
+find . -type f -name "nim.cfg" -print0 | xargs -0 sed -i '' -e "s/kazusaku/${USER}/"
+ghq get https://github.com/zer0-star/Nim-ACL
 ln -s ~/ghq/github.com/zer0-star/Nim-ACL/src nim/nim-acl-alias
 ```
 
