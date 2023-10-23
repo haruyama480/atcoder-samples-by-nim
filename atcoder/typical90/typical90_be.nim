@@ -8,7 +8,7 @@ import sequtils, math, algorithm, strutils, strformat, bitops, deques, heapqueue
 import harulib/utils
 import atcoder/extra/other/sliceutils
 import atcoder/extra/math/matrix
-import harulib/modint
+import atcoder/extra/math/modint_chaemon
 
 declareDMint(mint); mint.setMod 998244353
 declareDMint(boolean); boolean.setMod 2
