@@ -8,10 +8,10 @@ import sequtils, math, algorithm, strutils, strformat, bitops, deques, heapqueue
 import harulib/utils
 import atcoder/extra/other/sliceutils
 import atcoder/extra/math/matrix
-import atcoder/extra/math/modint_chaemon
+import atcoder/modint
 
-declareDMint(mint); mint.setMod 998244353
-declareDMint(boolean); boolean.setMod 2
+useDynamicModInt(mint, -1); mint.setMod 998244353
+useDynamicModInt(boolean, -2); boolean.setMod 2
 
 input:
   (N,M):int
@@ -21,7 +21,7 @@ for i in N:
   input:
     T: int
     a: seq[int1]
-  for t in T: 
+  for t in T:
     A[i][a[t]] = 1
 input:
   S: seq[int]
